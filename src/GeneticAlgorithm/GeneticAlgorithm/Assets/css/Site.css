@@ -1,0 +1,78 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#members-panel {
+    text-align: center;
+    background-color: #1e2b3c;
+    min-height: 200px;
+}
+
+.square {
+    background: #e2e2e2;
+    display: inline-block;
+    margin: 5px auto;
+    display: inline-block;
+    color: #ececec;
+    font-size: 12px;
+    padding: 3px;
+    width: 20px;
+    height: 20px;
+}
+
+.member-div {
+    background: #38485c;
+    width: 30px;
+    padding: 5px;
+    display: inline-block;
+    margin: 10px 5px;
+}
+
+.fitness-label {
+    color: #e2e2e2;
+}
+
+#input-panel {
+    text-align:center;
+}
+
+input[type=range]{
+    display: inline-block;
+    width: 20%; /* Specific width is required for Firefox. */
+    background: transparent;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+input {
+    color: #1E2B3C;
+}
+
+.leftTable {
+    text-align: right;
+    width: 50%;
+}
+
+.rightTable {
+    text-align: left;
+    width: 50%;
+}

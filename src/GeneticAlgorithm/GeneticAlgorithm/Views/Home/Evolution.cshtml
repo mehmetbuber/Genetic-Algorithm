@@ -1,0 +1,109 @@
+﻿@using GeneticAlgorithm.Models
+@{
+    ViewBag.Title = "Seed Generation";
+    List<MemberModel> population = new List<MemberModel>();
+    MemberModel target = new MemberModel();
+    List<int> fitnessList = new List<int>();
+
+    int variableCount = 20;
+    int valueCount = 5;
+    int populationCount = 20;
+    Evolution evolution = new Evolution();
+    if (ViewBag.evolution != null)
+    {
+        evolution = ViewBag.evolution;
+        population = evolution.Population;
+        target = evolution.Target;
+
+        for (var i = 0; i < evolution.Population.Count; i++)
+        {
+            fitnessList.Add(evolution.Population[i].Fitness);
+        }
+
+        populationCount = evolution.Population.Count;
+        variableCount = evolution.Target.Variables.Count;
+        valueCount = evolution.ValueCount;
+    }
+}
+<style type="text/css">
+</style>
+<body onload="spawnMembers();colorMembers();" style="background-color: #1E2B3C; color: #ececec">
+    <br>
+    <div class="row" id="input-panel">
+        <div class="col-md-12">
+            <label>Variable Count : </label>
+            <input type="text" id="variable-count" value="@variableCount">
+            <label>Value Count :</label>
+            <input type="text" id="value-count" value="@valueCount">
+            <label>Population Count : </label>
+            <input type="text" id="population-count" value="@populationCount"><br><br>
+            <input type="button" value="Generate Seed" title="Generate Seed" onclick="createButton()" />
+            <input type="button" value="Evolve" onclick="startEvolution()" />
+            <input type="button" value="Evolve - Fast" onclick="startEvolutionFast()" />
+            <br />
+            <input id="evolutionSpeed" type="range" min="0" max="1000" value="1000" style="margin-top: 20px;" />
+        </div>
+        <br>
+
+        <div class="col-md-12" id="members-panel">
+        </div>
+        <div class="col-md-12" style="display: inline-block; text-align: center">
+            <table class="table borderless">
+                <tbody>
+                    <tr>
+                        <td class="leftTable"><label>Generation :</label></td>
+                        <td class="rightTable"><text id="generation" style="margin-top: 5px;">&nbsp 0</text></td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"> <label>Total Members :</label></td>
+                        <td class="rightTable"><text id="totalMembers" style="margin-top: 5px;">&nbsp 0</text></td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"><label>Probabilities :</label></td>
+                        <td class="rightTable">&nbsp @string.Format("{0:n0}", ViewBag.probabilities)</td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"><label>Total Duration (1000 combination / sec) : </label> </td>
+                        <td class="rightTable">&nbsp @string.Format("{0:n0}", ViewBag.duration) years</td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"><label>Age of the humanity :</label></td>
+                        <td class="rightTable">&nbsp 200,000</td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"><label>Age of the earth :</label></td>
+                        <td class="rightTable">&nbsp 4,543,000,000</td>
+                    </tr>
+                    <tr>
+                        <td class="leftTable"><label>Age of the universe :</label></td>
+                        <td class="rightTable">&nbsp 13,543,000,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="graph"></div>
+
+    <input id="evolutionId" type="hidden" value="@evolution.Id.ToString()" />
+
+    <script type="text/javascript">
+        function colorMembers() {
+
+            var population = @Html.Raw(Json.Encode(population));
+            var targetMember = @Html.Raw(Json.Encode(target));
+
+            var target = document.getElementById('target');
+            var variables = targetMember.Variables;
+
+            colorLine(target, variables);
+
+            for (var i = 0; i < population.length; i++) {
+                var memberID = 'member' + i.toString();
+                var member = document.getElementById(memberID);
+                member.childNodes.item(0).innerText = population[i].Fitness;
+                colorLine(member, population[i].Variables);
+            }
+        }
+    </script>
+</body>
